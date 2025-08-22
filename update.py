@@ -1,3 +1,14 @@
+import yaml
+# Configuración
+build_yaml_path = "./build.yaml"
+# 0. Actualizar build.yaml con versión y changelog
+def update_build_yaml(build_yaml_path, version, changelog_text):
+    with open(build_yaml_path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    data["version"] = version
+    data["changelog"] = changelog_text
+    with open(build_yaml_path, "w", encoding="utf-8") as f:
+        yaml.dump(data, f, sort_keys=False, allow_unicode=True)
 import os
 import zipfile
 import shutil
@@ -174,6 +185,8 @@ if __name__ == "__main__":
     print("Obteniendo changelog y versión...")
     version, date, changelog_text = get_latest_changelog(changelog_path)
     print(f"Versión detectada: {version}")
+    print("Actualizando build.yaml...")
+    update_build_yaml(build_yaml_path, version, changelog_text)
     print("Creando meta.json...")
     meta = update_meta_json(meta_json_path, version, changelog_text)
     print("Empaquetando DLLs y meta.json en ZIP...")
@@ -189,26 +202,31 @@ if __name__ == "__main__":
     update_repository_json(repository_json_path, meta, version, changelog_text, f"", checksum)
     print("Sincronizando repositorio con remoto...")
     subprocess.run(["git", "pull"], check=True)
-    # Buscar commit previo con el mismo mensaje
+    # Buscar el commit más antiguo con el mismo mensaje
     commit_msg = f"Update repository for version {version}"
-    result = subprocess.run(["git", "log", "--pretty=format:%H:%s"], capture_output=True, text=True)
+    result = subprocess.run(["git", "log", "--reverse", "--pretty=format:%H:%s"], capture_output=True, text=True)
     found_commit = None
     for line in result.stdout.splitlines():
         if line.endswith(f":{commit_msg}"):
             found_commit = line.split(':')[0]
             break
     if found_commit:
-        print(f"Commit previo encontrado: {found_commit}. Realizando reset suave...")
-        subprocess.run(["git", "reset", "--soft", found_commit], check=True)
-    subprocess.run(["git", "add", repository_json_path], check=True)
-    subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-    subprocess.run(["git", "push"], check=True)
+        print(f"Commit más antiguo encontrado: {found_commit}. Realizando reset suave...")
+        subprocess.run(["git", "reset", "--soft", found_commit + "^"], check=True)
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+        print("Commit antiguo eliminado y reemplazado. Publicando con push --force...")
+        subprocess.run(["git", "push", "--force"], check=True)
+    else:
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+        subprocess.run(["git", "push"], check=True)
     print("Repositorio sincronizado y cambios publicados.")
     print("Publicando release en GitHub...")
     source_url = publish_github_release_cli(version, description, output_zip)
     print(f"URL del release: {source_url}")
     update_repository_json(repository_json_path, meta, version, changelog_text, source_url, checksum)
-    subprocess.run(["git", "add", repository_json_path], check=True)
-    subprocess.run(["git", "commit", "-m", f"Add release URL for version {version}"], check=True)
+    subprocess.run(["git", "add", "."], check=True)
+    subprocess.run(["git", "commit", "-m", f"Add release URL for version {version}"], check=False)
     subprocess.run(["git", "push"], check=True)
     print("Proceso completado correctamente.")

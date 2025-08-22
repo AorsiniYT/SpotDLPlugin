@@ -1,16 +1,17 @@
----
-name: "Template"
-guid: "eb5d7894-8eef-4b36-aa6f-5d124e828ce1"
-version: "1.0.0.0"
-targetAbi: "10.9.0.0"
-framework: "net8.0"
-overview: "Short description about your plugin"
-description: >
-  This is a longer description that can span more than one
-  line and include details about your plugin.
-category: "General"
-owner: "jellyfin"
+name: SpotDLPlugin
+guid: b7e2a1c2-9e4a-4b2a-8c1d-2f3e4a5b6c7d
+version: 0.1.0.1
+targetAbi: 10.9.0.0
+framework: net8.0
+overview: Short description about your plugin
+description: 'This is a longer description that can span more than one line and include
+  details about your plugin.
+
+  '
+category: General
+owner: jellyfin
 artifacts:
-- "Jellyfin.Plugin.Template.dll"
-changelog: >
-  changelog
+- SpotDLPlugin.dll
+changelog: '### 🛠️ Fixes
+
+  - Minor adjustments and bug fixes.'
