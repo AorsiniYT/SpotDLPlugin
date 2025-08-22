@@ -8,6 +8,14 @@
         "overview": "Download and manage your music with SpotDL in Jellyfin.",
         "versions": [
             {
+                "version": "0.1.0.1",
+                "changelog": "### \ud83d\udee0\ufe0f Fixes\n- Minor adjustments and bug fixes.",
+                "targetAbi": "10.6.0.0",
+                "sourceUrl": "https://github.com/AorsiniYT/SpotDLPlugin/releases/download/0.1.0.1/spotdlplugin_0.1.0.1.zip",
+                "checksum": "3f13204145a2a8bb6da9e418794fcdd7",
+                "timestamp": "2025-08-22T17:02:53Z"
+            },
+            {
                 "version": "0.1.0.0",
                 "changelog": "### \u2728 Major Features\n- Initial release of SpotDLPlugin.",
                 "targetAbi": "10.6.0.0",
