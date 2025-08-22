@@ -11,7 +11,7 @@
                 "version": "0.1.0.0",
                 "changelog": "### \u2728 Major Features\n- Initial release of SpotDLPlugin.",
                 "targetAbi": "10.6.0.0",
-                "sourceUrl": "",
+                "sourceUrl": "https://github.com/AorsiniYT/SpotDLPlugin/releases/download/0.1.0.0/spotdlplugin_0.1.0.0.zip",
                 "checksum": "a862698bc7d3e0e8f3a74b6a746f1801",
                 "timestamp": "2025-08-22T16:57:55Z"
             }
