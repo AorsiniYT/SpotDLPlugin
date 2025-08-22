@@ -1,0 +1,20 @@
+[
+    {
+        "category": "Metadata",
+        "guid": "b7e2a1c2-9e4a-4b2a-8c1d-2f3e4a5b6c7d",
+        "name": "SpotDLPlugin",
+        "description": "Plugin for Jellyfin that integrates SpotDL for music management and downloading.",
+        "owner": "AorsiniYT",
+        "overview": "Download and manage your music with SpotDL in Jellyfin.",
+        "versions": [
+            {
+                "checksum": "",
+                "changelog": "Initial release.",
+                "targetAbi": "10.6.0.0",
+                "sourceUrl": "",
+                "timestamp": "2025-08-22 00:00:00",
+                "version": "1.0.0.0"
+            }
+        ]
+    }
+]
